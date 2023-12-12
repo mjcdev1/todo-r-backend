@@ -6,10 +6,7 @@ import os
 app = Flask(__name__)
 CORS(app, origins=['https://todo.mjc-dev.com', 'https://todo-r-backend-97c32160812e.herokuapp.com'])
 
-
-
 mongo_uri = "mongodb+srv://mjcdeveloper1:NecroticUvula@todo-r-cluster.nrtn6of.mongodb.net/?retryWrites=true&w=majority"
-
 client = MongoClient(mongo_uri)
 db = client.data
 
@@ -20,7 +17,7 @@ def receive_data():
         response.headers.add('Access-Control-Allow-Origin', 'https://todo.mjc-dev.com')
         response.headers.add('Access-Control-Allow-Methods', 'POST')
         response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
-        return response, 200  # Respond to the preflight request
+        return response
 
     try:
         data = request.get_json()
@@ -34,7 +31,6 @@ def receive_data():
 
     except Exception as e:
         return str(e), 500
-
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
