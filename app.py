@@ -7,7 +7,7 @@ app = Flask(__name__)
 CORS(app, origins=['https://todo.mjc-dev.com'])
 
 # MongoDB Atlas connection string
-mongo_uri = "mongodb://atlas-sql-6578acceabdc1124b04cb8d2-l1dlm.a.query.mongodb.net/data?ssl=true&authSource=admin"
+mongo_uri = "mongodb+srv://mjcdeveloper1:SmokingNarhwal226$@todo-r-cluster.nrtn6of.mongodb.net/?retryWrites=true&w=majority"
 client = MongoClient(mongo_uri)
 
 data = client.data 
