@@ -16,13 +16,22 @@ db = client.data
 @app.route('/create_user', methods=['POST', 'OPTIONS'])
 def receive_data():
     if request.method == 'OPTIONS':
-        return jsonify(), 200  # Respond to the preflight request
+        response = make_response()
+        response.headers.add('Access-Control-Allow-Origin', 'https://todo.mjc-dev.com')
+        response.headers.add('Access-Control-Allow-Methods', 'POST')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+        return response, 200  # Respond to the preflight request
+
     try:
         data = request.get_json()
         lists = db.lists
         inserted_data = lists.insert_one(data)
         processed_data = "Received data: " + str(data)
-        return processed_data, 200
+
+        response = make_response(processed_data, 200)
+        response.headers.add('Access-Control-Allow-Origin', 'https://todo.mjc-dev.com')
+        return response
+
     except Exception as e:
         return str(e), 500
 
