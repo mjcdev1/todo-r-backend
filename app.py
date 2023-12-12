@@ -4,7 +4,7 @@ from flask_cors import CORS
 from pymongo import MongoClient
 
 app = Flask(__name__)
-CORS(app, origins=['https://wordgame.mjc-dev.com', 'https://admin.mjc-dev.com'])
+CORS(app, origins=['https://todo.mjc-dev.com'])
 
 # MongoDB Atlas connection string
 mongo_uri = "mongodb://atlas-sql-6578acceabdc1124b04cb8d2-l1dlm.a.query.mongodb.net/data?ssl=true&authSource=admin"
