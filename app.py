@@ -7,14 +7,10 @@ app = Flask(__name__)
 CORS(app, origins=['https://wordgame.mjc-dev.com', 'https://admin.mjc-dev.com'])
 
 # MongoDB Atlas connection string
-mongo_uri = "mongodb+srv://mjcunn:NecroticUvula1$@cluster0.zwacvys.mongodb.net/mydatabase?retryWrites=true&w=majority"
-
-# Create a MongoClient instance
+mongo_uri = "mongodb://atlas-sql-6578acceabdc1124b04cb8d2-l1dlm.a.query.mongodb.net/data?ssl=true&authSource=admin"
 client = MongoClient(mongo_uri)
 
-# Access the MongoDB database
-db = client.users  
-db_game = client.game
+lists = client.lists  
 
 @app.route('/create_user', methods=['POST'])
 def receive_data():
