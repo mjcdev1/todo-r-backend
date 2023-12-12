@@ -4,7 +4,7 @@ from pymongo import MongoClient
 import os
 
 app = Flask(__name__)
-CORS(app, origins=['https://todo.mjc-dev.com'])
+CORS(app, origins=['https://todo.mjc-dev.com/'])
 
 mongo_uri = "mongodb+srv://mjcdeveloper1:SmokingNarhwal226$@todo-r-cluster.nrtn6of.mongodb.net/?retryWrites=true&w=majority"
 
