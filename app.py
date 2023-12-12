@@ -10,26 +10,18 @@ CORS(app, origins=['https://wordgame.mjc-dev.com', 'https://admin.mjc-dev.com'])
 mongo_uri = "mongodb://atlas-sql-6578acceabdc1124b04cb8d2-l1dlm.a.query.mongodb.net/data?ssl=true&authSource=admin"
 client = MongoClient(mongo_uri)
 
-lists = client.lists  
+data = client.data 
 
-@app.route('/create_user', methods=['POST'])
-def receive_data():
+@app.route('/create_list', methods=['POST'])
+def create_list():
     try:
-        data = request.get_json()
+        received_data = request.get_json()
 
-        threes_user_data = db.threes_user_data
-        fours_user_data = db.fours_user_data
-        fives_user_data = db.fives_user_data
-        sixes_user_data = db.sixes_user_data
-        fives_user_data_monthly = db.fives_user_data_monthly
+        lists = data.lists
 
-        inserted_data = threes_user_data.insert_one(data)
-        inserted_data = fours_user_data.insert_one(data)
-        inserted_data = fives_user_data.insert_one(data)
-        inserted_data = sixes_user_data.insert_one(data)
-        inserted_data = fives_user_data_monthly.insert_one(data)
+        inserted_data = lists.insert_one(data)
         
-        processed_data = "Received data: " + str(data)
+        processed_data = "Received data: " + str(received_data)
         
         return processed_data, 200
     except Exception as e:
