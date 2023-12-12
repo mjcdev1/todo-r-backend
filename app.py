@@ -4,18 +4,14 @@ from pymongo import MongoClient
 import os
 
 app = Flask(__name__)
-CORS(app, origins=['https://todo.mjc-dev.com'], methods=['POST'], supports_credentials=True)
+CORS(app, origins=['https://todo.mjc-dev.com'])
 
-# MongoDB connection setup
-mongo_uri = "mongodb+srv://mjcdeveloper1:SmokingNarhwal226$@todo-r-cluster.nrtn6of.mongodb.net/?retryWrites=true&w=majority"
-try:
-    client = MongoClient(mongo_uri)
-    db = client.data
-    print("Connected to MongoDB successfully!")
-except Exception as e:
-    print(f"Error connecting to MongoDB: {e}")
 
-# Your main route for handling POST requests
+mongo_uri = "mongodb+srv://mjcdeveloper1:NecroticUvula@todo-r-cluster.nrtn6of.mongodb.net/?retryWrites=true&w=majority"
+
+client = MongoClient(mongo_uri)
+db = client.data
+
 @app.route('/create_user', methods=['POST'])
 def receive_data():
     try:
