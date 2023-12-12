@@ -1,22 +1,19 @@
 from flask import Flask, request, jsonify, make_response
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from pymongo import MongoClient
 import os
 
 app = Flask(__name__)
-CORS(app, origins=['https://todo.mjc-dev.com', 'https://todo-r-backend-97c32160812e.herokuapp.com'])
 
 mongo_uri = "mongodb+srv://mjcdeveloper1:NecroticUvula@todo-r-cluster.nrtn6of.mongodb.net/?retryWrites=true&w=majority"
 client = MongoClient(mongo_uri)
 db = client.data
 
 @app.route('/create_user', methods=['POST', 'OPTIONS'])
+@cross_origin(origin='https://todo.mjc-dev.com', methods=['POST'], headers=['Content-Type'])
 def receive_data():
     if request.method == 'OPTIONS':
         response = make_response()
-        response.headers.add('Access-Control-Allow-Origin', '*')  # Allow any origin temporarily
-        response.headers.add('Access-Control-Allow-Methods', 'POST')
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
         return response
 
     try:
@@ -26,7 +23,6 @@ def receive_data():
         processed_data = "Received data: " + str(data)
 
         response = make_response(processed_data, 200)
-        response.headers.add('Access-Control-Allow-Origin', 'https://todo.mjc-dev.com')
         return response
 
     except Exception as e:
