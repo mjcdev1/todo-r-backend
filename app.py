@@ -14,7 +14,7 @@ db = client.data
 def receive_data():
     if request.method == 'OPTIONS':
         response = make_response()
-        response.headers.add('Access-Control-Allow-Origin', 'https://todo.mjc-dev.com')
+        response.headers.add('Access-Control-Allow-Origin', '*')  # Allow any origin temporarily
         response.headers.add('Access-Control-Allow-Methods', 'POST')
         response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
         return response
