@@ -4,7 +4,8 @@ from pymongo import MongoClient
 import os
 
 app = Flask(__name__)
-CORS(app, origins=['https://todo.mjc-dev.com'])
+CORS(app, origins=['https://todo.mjc-dev.com', 'https://todo-r-backend-97c32160812e.herokuapp.com'])
+
 
 
 mongo_uri = "mongodb+srv://mjcdeveloper1:NecroticUvula@todo-r-cluster.nrtn6of.mongodb.net/?retryWrites=true&w=majority"
@@ -12,8 +13,10 @@ mongo_uri = "mongodb+srv://mjcdeveloper1:NecroticUvula@todo-r-cluster.nrtn6of.mo
 client = MongoClient(mongo_uri)
 db = client.data
 
-@app.route('/create_user', methods=['POST'])
+@app.route('/create_user', methods=['POST', 'OPTIONS'])
 def receive_data():
+    if request.method == 'OPTIONS':
+        return jsonify(), 200  # Respond to the preflight request
     try:
         data = request.get_json()
         lists = db.lists
@@ -22,6 +25,7 @@ def receive_data():
         return processed_data, 200
     except Exception as e:
         return str(e), 500
+
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
