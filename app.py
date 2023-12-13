@@ -1,11 +1,20 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app, resources={r"/api_test": {"origins": "*"}})  # Allow requests from any origin
 
-@app.route('/api_test', methods=['POST'])
+# CORS middleware
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    return response
+
+@app.route('/api_test', methods=['POST', 'OPTIONS'])
 def handle_post_request():
+    if request.method == 'OPTIONS':
+        return jsonify({'message': 'CORS preflight request successful'}), 200
+
     try:
         # Get the JSON data from the request
         data = request.get_json()
@@ -25,3 +34,4 @@ def handle_post_request():
 if __name__ == '__main__':
     # Run the Flask application
     app.run(debug=True)
+
