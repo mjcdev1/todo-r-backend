@@ -1,41 +1,26 @@
-import os, requests
 from flask import Flask, request, jsonify
-from flask_cors import CORS
-from pymongo import MongoClient
 
 app = Flask(__name__)
-CORS(app, origins=['https://todo.mjc-dev.com'])
 
-# MongoDB Atlas connection string
-mongo_uri = "mongodb+srv://mjcdeveloper1:NecroticUvula@todo-r-cluster.nrtn6of.mongodb.net/?retryWrites=true&w=majority"
-
-# Create a MongoClient instance
-client = MongoClient(mongo_uri)
-
-db = client.data  
-
-@app.route('/create_user', methods=['POST'])
-def receive_data():
+# Define your API endpoint
+@app.route('/your-api-endpoint', methods=['POST'])
+def handle_post_request():
     try:
+        # Get the JSON data from the request
         data = request.get_json()
-        
-        lists = db.lists
 
-        inserted_data = lists.insert_one(data)
-        
-        processed_data = "Received data: " + str(data)
-        
-        response = jsonify({'message': 'User created successfully'})
-        response.headers.add('Access-Control-Allow-Origin', '*')  # Add CORS header
+        # Process the data as needed
+        # For demonstration purposes, just print the received data
+        print("Received data:", data)
 
-        return response, 200
+        # Return a success message
+        return jsonify({'message': 'Request successful'}), 200
+
     except Exception as e:
-        return str(e), 500
-
-
-
-
+        # Handle any exceptions or errors
+        print("Error:", str(e))
+        return jsonify({'message': 'Internal server error'}), 500
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    # Run the Flask application
+    app.run(debug=True)
