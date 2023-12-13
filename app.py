@@ -5,15 +5,16 @@ app = Flask(__name__)
 # CORS middleware
 @app.after_request
 def after_request(response):
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+    response.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
     return response
 
+# Your API endpoint
 @app.route('/api_test', methods=['POST', 'OPTIONS'])
 def handle_post_request():
     if request.method == 'OPTIONS':
-        return jsonify({'message': 'CORS preflight request successful'}), 200
+        return '', 200  # Respond successfully to preflight request
 
     try:
         # Get the JSON data from the request
@@ -34,4 +35,5 @@ def handle_post_request():
 if __name__ == '__main__':
     # Run the Flask application
     app.run(debug=True)
+
 
