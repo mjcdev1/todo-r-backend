@@ -1,8 +1,9 @@
-from flask import Flask, request, jsonify
+from flask import Flask
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
-# Define your API endpoint
 @app.route('/api_test', methods=['POST'])
 def handle_post_request():
     try:
