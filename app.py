@@ -2,38 +2,23 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# CORS middleware
-@app.after_request
-def after_request(response):
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
-    response.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
-    return response
+@app.route('/ping', methods=['POST'])
+def receive_ping():
+    if request.method == 'POST':
+        try:
+            data = request.get_json()
 
-# Your API endpoint
-@app.route('/api_test', methods=['POST', 'OPTIONS'])
-def handle_post_request():
-    print("Received request:", request.method, request.headers)
-    
-    if request.method == 'OPTIONS':
-        return jsonify({'message': 'CORS preflight request successful'}), 200
+            print("Received data:", data)
+            response_data = {'message': 'ping'}
+            return jsonify(response_data), 200
 
-    try:
-        # Get the JSON data from the request
-        data = request.get_json()
-
-        # Process the data as needed
-        # For demonstration purposes, just print the received data
-        print("Received data:", data)
-
-        # Return a success message
-        return jsonify({'message': 'Request successful'}), 200
-
-    except Exception as e:
-        # Handle any exceptions or errors
-        print("Error:", str(e))
-        return jsonify({'message': 'Internal server error'}), 500
+        except Exception as e:
+            # Handle any exceptions or errors
+            print("Error:", str(e))
+            return jsonify({'message': 'Internal server error'}), 500
+    else:
+        # If the request method is not POST
+        return jsonify({'message': 'Method not allowed'}), 405
 
 if __name__ == '__main__':
-    # Run the Flask application
     app.run(debug=True)
