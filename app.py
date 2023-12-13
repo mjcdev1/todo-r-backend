@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app, origins=["https://specific-origin.com"])
+CORS(app, origins=["http://10.0.0.187:8080/"])
 
 @app.route('/ping', methods=['POST'])
 def receive_ping():
