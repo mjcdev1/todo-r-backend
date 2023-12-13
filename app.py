@@ -1,8 +1,8 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/api_test": {"origins": "*"}})  # Allow requests from any origin
 
 @app.route('/api_test', methods=['POST'])
 def handle_post_request():
