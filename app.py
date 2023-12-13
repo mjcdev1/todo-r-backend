@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify
 app = Flask(__name__)
 
 # Define your API endpoint
-@app.route('/your-api-endpoint', methods=['POST'])
+@app.route('/api_test', methods=['POST'])
 def handle_post_request():
     try:
         # Get the JSON data from the request
