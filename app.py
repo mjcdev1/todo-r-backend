@@ -25,11 +25,12 @@ def receive_data():
         
         processed_data = "Received data: " + str(data)
         
-        return processed_data, 200
+        response = jsonify({'message': 'User created successfully'})
+        response.headers.add('Access-Control-Allow-Origin', '*')  # Add CORS header
+
+        return response, 200
     except Exception as e:
         return str(e), 500
-
-    return jsonify(response)
 
 
 
