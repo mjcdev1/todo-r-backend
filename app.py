@@ -13,8 +13,10 @@ def after_request(response):
 # Your API endpoint
 @app.route('/api_test', methods=['POST', 'OPTIONS'])
 def handle_post_request():
+    print("Received request:", request.method, request.headers)
+    
     if request.method == 'OPTIONS':
-        return '', 200  # Respond successfully to preflight request
+        return jsonify({'message': 'CORS preflight request successful'}), 200
 
     try:
         # Get the JSON data from the request
@@ -35,5 +37,3 @@ def handle_post_request():
 if __name__ == '__main__':
     # Run the Flask application
     app.run(debug=True)
-
-
